@@ -64,7 +64,7 @@ import { FaGoogle } from "react-icons/fa";
 
 const Register = () => {
     const handleClick = async () => {
-        const url = 'http://localhost:8000'
+        const url = process.env.REACT_APP_API_BASE_URL
         window.open(`${url}/auth/google`, '_self')
     }
     return (
