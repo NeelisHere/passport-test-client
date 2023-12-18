@@ -8,9 +8,27 @@ const Home = () => {
     const url = useMemo(() => process.env.REACT_APP_API_BASE_URL, [])
     const [user, setUser] = useState(null)
 
-    const getProfileAPI = useCallback( async () => {
+    // const getProfileAPI = useCallback( async () => {
+    //     try {
+    //         const { data } = await axios.get(`${url}`)
+    //         console.log(data)
+    //         if (data.user) {
+    //             setUser(data.user)
+    //         } else {
+    //             navigate('/auth/register')
+    //         }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }, [navigate, url])
+
+    // useEffect(() => {
+    //     getProfileAPI()
+    // }, [getProfileAPI])
+
+    const getProfile = async () => {
         try {
-            const { data } = await axios.get(`${url}`)
+            const { data } = await axios.get(`${url}`, { withCredentials: true })
             console.log(data)
             if (data.user) {
                 setUser(data.user)
@@ -20,11 +38,7 @@ const Home = () => {
         } catch (error) {
             console.log(error)
         }
-    }, [navigate, url])
-
-    useEffect(() => {
-        getProfileAPI()
-    }, [getProfileAPI])
+    }
 
     const handleLogout = async () => {
         try {
@@ -34,14 +48,14 @@ const Home = () => {
             navigate('/auth/register')
         }
     }
-    return user?(
+    return (
         <Box>
             <Box>
-                {console.log(user)}
+                <Button onClick={getProfile}>Get Profile</Button>
             </Box>
             <Button colorScheme='red' onClick={handleLogout}>Logout</Button>
         </Box>
-    ): <>Loading...</>
+    )
 }
 
 export default Home
