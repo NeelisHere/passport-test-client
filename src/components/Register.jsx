@@ -56,26 +56,40 @@
 
 
 
-import { Button, Input } from '@chakra-ui/react'
+import { Button, Input, VStack, Center } from '@chakra-ui/react'
 import { FaGoogle } from "react-icons/fa";
 // import axios from 'axios'
-// import { useForm } from 'react-hook-form'
-// import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 const Register = () => {
-    const handleClick = async () => {
+    const { handleSubmit, register } = useForm()
+    const onSubmit = (data) => {
+        // console.log(data)
+        
+    }
+    const handleGoogleLogin = async () => {
         const url = process.env.REACT_APP_API_BASE_URL
         window.open(`${url}/auth/google`, '_self')
     }
     return (
-        // <form onSubmit={handleSubmit(onSubmit)}>
-        //     {/* <h1>Register</h1> */}
-        //     {/* <Input type="text" { ...register('name') } />
-        //     <Button type='submit'>Register</Button> */}
-            
-        //     {/* <Link to={'/auth/login'}>Login</Link> */}
-        // </form>
-        <Button onClick={handleClick} leftIcon={<FaGoogle/>}>Register with Google</Button>
+        <VStack gap={4}>
+            <Center>Register</Center>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <VStack gap={4}>
+                    <Input type="text" { ...register('username') } />
+                    <Input type="text" { ...register('email') } />
+                    <Button w={'100%'} type='submit'>Register</Button>
+                </VStack>
+            </form>
+            <Button 
+                w={'100%'} 
+                onClick={handleGoogleLogin} 
+                leftIcon={<FaGoogle/>}
+            >
+                Register with Google
+            </Button>
+        </VStack>
     )
 }
 
